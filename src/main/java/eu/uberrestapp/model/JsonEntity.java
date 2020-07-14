@@ -17,7 +17,7 @@ import javax.persistence.*;
 import java.util.Map;
 
 @Entity
-@Table(name = "json_object")
+@Table(name = "json_entity")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -30,45 +30,22 @@ import java.util.Map;
         @TypeDef(name = "json", typeClass = JsonStringType.class),
         @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 })
-public class JsonObject {
+public class JsonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "json_object_map", joinColumns = @JoinColumn(name = "json_object_id"))
+    @CollectionTable(name = "json_entity_map", joinColumns = @JoinColumn(name = "json_entity_id"))
 
 //    (!): @Type с "jsonb" требует выключенного @Convert, также columnDefinition дожен быть "jsonb",
 //    (но это не работает до конца: сохраняет правильно, но при получении из БД - ошибка)
 //    @Type(type = "jsonb")
 
-    // Конвертер конвертит только значение у мапы JsonNode<->String
+    // Конвертер конвертит значения мапы (JsonNode<->String)
     @Convert(converter = JsonToStringConverter.class, attributeName = "value")
 //    @MapKeyColumn(columnDefinition = "jsonb")
     @Column(name = "json_map_value", columnDefinition = "text")
     private Map<String, JsonNode> jsonMap;
 
-    //    @JsonAnyGetter
-//    public Map<String, JsonNode> getJsonMap() {
-//        return jsonMap;
-//    }
-
-    //    @JsonAnySetter
-//    public void setJsonMap(Map<String, JsonNode> jsonMap) {
-//        this.jsonMap = jsonMap;
-//    }
-
-//    @JsonAnyGetter
-//    public Map<String, JsonNode> getJsonMap() {
-//        return jsonMap.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getJsonNode()));
-//    }
-
-//    @JsonAnySetter
-//    public void setJsonMap(Map<String, JsonNode> jsonMap) {
-//        this.jsonMap = jsonMap.entrySet().stream().collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
-//    }
-
-//    public JsonObject(JsonNode jsonMap) {
-//        this.jsonMap = jsonMap;
-//    }
 }

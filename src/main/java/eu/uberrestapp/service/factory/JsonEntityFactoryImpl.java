@@ -1,29 +1,23 @@
-package eu.uberrestapp.service;
+package eu.uberrestapp.service.factory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.uberrestapp.model.JsonObject;
+import eu.uberrestapp.model.JsonEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 @Component
-public class JsonObjectFactoryImpl implements JsonObjectFactory {
+public class JsonEntityFactoryImpl implements JsonEntityFactory {
     private final ObjectMapper objectMapper;
 
-    public JsonObjectFactoryImpl(ObjectMapper objectMapper) {
+    public JsonEntityFactoryImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     private Map<String, JsonNode> jsonToMap(JsonNode jsonNode) {
-//        Iterator<String> iterator = jsonNode.fieldNames();
-//        while (iterator.hasNext()) {
-//            String key = iterator.next();
-//            JsonNode val = jsonNode.findValue(key);
-//            System.out.println(val.getNodeType() + " : " + key + " : " + val.toPrettyString());
-//        }
         Map<String, JsonNode> resMap = null;
         try {
             resMap = objectMapper.readValue(jsonNode.toPrettyString(), new TypeReference<Map<String, JsonNode>>() {
@@ -35,9 +29,9 @@ public class JsonObjectFactoryImpl implements JsonObjectFactory {
     }
 
     @Override
-    public JsonObject getJsonObject(JsonNode jsonNode) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.setJsonMap(jsonToMap(jsonNode));
-        return jsonObject;
+    public JsonEntity getJsonObject(JsonNode jsonNode) {
+        JsonEntity jsonEntity = new JsonEntity();
+        jsonEntity.setJsonMap(jsonToMap(jsonNode));
+        return jsonEntity;
     }
 }
