@@ -1,11 +1,11 @@
-//package eu.uberrestapp.dao;
-//
-//import eu.uberrestapp.model.JsonObject;
-//
-//public interface JsonObjectDao {
-//
-//    JsonObject getById(Long id);
-//
-//    Long persist(JsonObject jsonObject);
-//
-//}
+package eu.uberrestapp.dao;
+
+import eu.uberrestapp.model.JsonObject;
+
+import java.util.List;
+
+public interface JsonObjectDao {
+
+    List<JsonObject> findAllWhereKeyAtTop(String key);
+
+}
