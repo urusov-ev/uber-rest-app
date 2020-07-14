@@ -19,6 +19,7 @@ public class JsonObject {
     Long id;
 
     @Convert(converter = JsonToStringConverter.class)
+    @Column(columnDefinition = "text")
     JsonNode json;
 
     public JsonObject(JsonNode json) {

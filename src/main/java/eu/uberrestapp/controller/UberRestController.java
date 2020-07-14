@@ -30,7 +30,9 @@ public class UberRestController {
 //        System.out.println(request.toPrettyString());
         while (iterator.hasNext()) {
             String key = iterator.next();
-            System.out.println(key + ": " + inputJsonNode.findValue(key).toString());
+            JsonNode val = inputJsonNode.findValue(key);
+//            System.out.println(val.getNodeType());
+            System.out.println(val.getNodeType() + " : " + key + " : " + val.toPrettyString());
         }
         JsonObject persisted = jsonObjectService.saveJsonObject(inputJsonNode);
 //        System.out.println(persisted);
