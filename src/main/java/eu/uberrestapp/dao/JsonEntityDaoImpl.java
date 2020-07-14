@@ -1,6 +1,6 @@
 package eu.uberrestapp.dao;
 
-import eu.uberrestapp.model.JsonObject;
+import eu.uberrestapp.model.JsonEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,14 +10,14 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class JsonObjectDaoImpl implements JsonObjectDao {
+public class JsonEntityDaoImpl implements JsonEntityDao {
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<JsonObject> findAllWhereKeyAtTop(String key) {
+    public List<JsonEntity> findAllWhereKeyAtTop(String key) {
         //noinspection unchecked
-        List<JsonObject> res = (List<JsonObject>) entityManager.createNativeQuery("SELECT * FROM \"UberDB\".public.json_object WHERE json\\?" + key)
+        List<JsonEntity> res = (List<JsonEntity>) entityManager.createNativeQuery("SELECT * FROM \"UberDB\".public.json_entity WHERE json\\?" + key)
                 .getResultList();
         return res;
     }

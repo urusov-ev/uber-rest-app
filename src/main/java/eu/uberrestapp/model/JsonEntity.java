@@ -13,13 +13,13 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "json_object")
+@Table(name = "json_entity")
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
-public class JsonObject {
+public class JsonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -28,7 +28,7 @@ public class JsonObject {
     @Column(name = "json", columnDefinition = "jsonb")
     JsonNode json;
 
-    public JsonObject(JsonNode json) {
+    public JsonEntity(JsonNode json) {
         this.json = json;
     }
 }
