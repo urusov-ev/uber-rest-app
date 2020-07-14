@@ -15,14 +15,23 @@ public class JsonObjectService {
         this.jsonObjectRepo = jsonObjectRepo;
     }
 
+//    public JsonObjectService(JsonObjectDao jsonObjectDao) {
+//        this.jsonObjectDao = jsonObjectDao;
+//    }
+//
+//    private final JsonObjectDao jsonObjectDao;
+
     @Transactional
     public JsonObject saveJsonObject(JsonNode jsonNode) {
         JsonObject jsonObject = new JsonObject(jsonNode);
+//        Long id = jsonObjectDao.persist(jsonObject);
+//        return jsonObjectDao.getById(id);
         return jsonObjectRepo.save(jsonObject);
     }
 
     @Transactional
     public JsonNode getJsonById(long id) {
+//        JsonObject jsonObject = jsonObjectDao.getById(id);
         JsonObject jsonObject = jsonObjectRepo.getOne(id);
         return jsonObject.getJson();
     }
