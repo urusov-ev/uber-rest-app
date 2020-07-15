@@ -21,24 +21,34 @@ public class UberRestController {
         this.jsonEntityService = jsonEntityService;
     }
 
+    // Получить все
+    @GetMapping(value = "/")
+    public ResponseEntity<List<JsonEntity>> getAll() {
+        return ResponseEntity.ok(jsonEntityService.getAll());
+    }
+
+    // Сохранить новый JSON
     @PostMapping(value = "/")
     public ResponseEntity<JsonEntity> saveJsonEntity(@RequestBody JsonNode inputJsonNode) {
         JsonEntity persisted = jsonEntityService.saveJsonEntity(inputJsonNode);
         return ResponseEntity.ok(persisted);
     }
 
-    @GetMapping(value = "/")
+    // Получить по ID (JsonNode)
+    @GetMapping(value = "/getById")
     public ResponseEntity<JsonNode> getJsonNodeById(@PathParam("id") Long id) {
         JsonNode jsonNode = jsonEntityService.getJsonById(id);
         return ResponseEntity.ok(jsonNode);
     }
 
+    // Найти по ключу и по значению
     @GetMapping(value = "/find")
     ResponseEntity<List<JsonEntity>> findByKeyAndValue(@PathParam("key") String key, @PathParam("val") String val) {
         List<JsonEntity> jsonEntityList = jsonEntityService.findByKeyAndValue(key, val);
         return ResponseEntity.ok(jsonEntityList);
     }
 
+    // Найти по ключу и по значению (json)
     @PostMapping(value = "/find2")
     ResponseEntity<List<JsonEntity>> findByKeyAndValue2(@RequestBody JsonNode inputJsonNode) {
         List<JsonEntity> jsonEntityList = jsonEntityService.findAllAtTopLevel(inputJsonNode);

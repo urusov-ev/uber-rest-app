@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface JsonEntityService {
 
+    List<JsonEntity> getAll();
+
     JsonEntity saveJsonEntity(JsonNode jsonNode);
 
     JsonNode getJsonById(long id);

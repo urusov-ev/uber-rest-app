@@ -21,6 +21,12 @@ public class JsonEntityServiceImpl implements JsonEntityService {
 
     @Override
     @Transactional
+    public List<JsonEntity> getAll() {
+        return jsonEntityRepo.findAll();
+    }
+
+    @Override
+    @Transactional
     public JsonEntity saveJsonEntity(JsonNode jsonNode) {
         JsonEntity jsonEntity = new JsonEntity(jsonNode);
         return jsonEntityRepo.save(jsonEntity);
