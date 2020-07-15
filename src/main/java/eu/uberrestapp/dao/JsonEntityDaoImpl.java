@@ -24,4 +24,13 @@ public class JsonEntityDaoImpl implements JsonEntityDao {
         List<JsonEntity> res = query.getResultList();
         return res;
     }
+
+    @Override
+    public JsonEntity findByPath(Long id, String jsonPath) {
+        Query query = entityManager
+                .createNativeQuery("SELECT json#>>:path\\:\\:text[] json_node FROM json_entity WHERE id=:id", "JsonNodeMapping")
+                .setParameter("path", jsonPath)
+                .setParameter("id", id);
+        return (JsonEntity) query.getSingleResult();
+    }
 }

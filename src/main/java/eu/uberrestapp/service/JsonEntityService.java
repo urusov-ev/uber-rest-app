@@ -7,18 +7,23 @@ import java.util.List;
 
 public interface JsonEntityService {
 
+    // Получить все
     List<JsonEntity> getAll();
 
-    JsonEntity saveJsonEntity(JsonNode jsonNode);
+    // Сохранить новый JSON
+    JsonEntity saveJsonEntity(String jsonString);
 
+    // Получить по ID (JsonNode)
     JsonNode getJsonById(long id);
 
+    // Найти по ключу и по значению
     List<JsonEntity> findByKeyAndValue(String key, String value);
 
-    List<JsonEntity> findAllAtTopLevel(JsonNode jsonNode);
+    // Найти по ключу и по значению (json string)
+    List<JsonEntity> findAllAtTopLevel(String jsonString);
 
-    /**
-     * Находит и возвращает все JSON`ы, которые содержат строку {@code str} в качестве ключа верхнего уровня
-     */
+    // Находит и возвращает все JSON`ы, которые содержат строку {@code str} в качестве ключа верхнего уровня
     List<JsonEntity> findAllWhereKeyAtTop(String key);
+
+    JsonEntity findByPath(Long id, String jsonPath);
 }

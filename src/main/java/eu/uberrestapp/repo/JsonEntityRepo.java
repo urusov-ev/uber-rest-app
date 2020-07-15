@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface JsonEntityRepo extends JpaRepository<JsonEntity, Long> {
-
     /**
      * Находит и возвращает все JSON`ы, которые содержат пару ключ-значение (key,val)
      */
@@ -23,6 +22,9 @@ public interface JsonEntityRepo extends JpaRepository<JsonEntity, Long> {
      */
     @Query(nativeQuery = true, value = "SELECT * FROM json_entity WHERE json@>:kv\\:\\:jsonb")
     List<JsonEntity> findAtTheTopLevel(@Param("kv") String kv);
+
+    @Query(nativeQuery = true, value = "SELECT json#>>:path\\:\\:text[] json_node FROM json_entity WHERE id=:id")
+    JsonEntity findByPath(@Param("id") Long id, @Param("path") String jsonPath);
 
 //    /**
 //     * Находит и возвращает все JSON`ы, которые содержат строку {@code str} в качестве ключа верхнего уровня

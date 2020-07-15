@@ -8,4 +8,5 @@ public interface JsonEntityDao {
 
     List<JsonEntity> findAllWhereKeyAtTop(String key);
 
+    JsonEntity findByPath(Long id, String jsonPath);
 }

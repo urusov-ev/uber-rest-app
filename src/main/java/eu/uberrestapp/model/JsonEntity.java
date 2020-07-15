@@ -1,6 +1,5 @@
 package eu.uberrestapp.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,14 @@ import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 
+@SqlResultSetMapping(name = "JsonNodeMapping",
+        classes = {
+                @ConstructorResult(targetClass = JsonEntity.class,
+                        columns = {
+                                @ColumnResult(name = "json_node", type = String.class),
+                        })
+        }
+)
 @Entity
 @Table(name = "json_entity")
 @NoArgsConstructor
@@ -24,11 +31,19 @@ public class JsonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+//    @Type(type = "jsonb")
+//    @Column(name = "json", columnDefinition = "jsonb")
+//    JsonNode json;
+
     @Type(type = "jsonb")
     @Column(name = "json", columnDefinition = "jsonb")
-    JsonNode json;
+    String jsonString;
 
-    public JsonEntity(JsonNode json) {
-        this.json = json;
+//    public JsonEntity(JsonNode json) {
+//        this.json = json;
+//    }
+
+    public JsonEntity(String jsonString) {
+        this.jsonString = jsonString;
     }
 }

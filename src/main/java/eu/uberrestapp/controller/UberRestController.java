@@ -29,8 +29,8 @@ public class UberRestController {
 
     // Сохранить новый JSON
     @PostMapping(value = "/")
-    public ResponseEntity<JsonEntity> saveJsonEntity(@RequestBody JsonNode inputJsonNode) {
-        JsonEntity persisted = jsonEntityService.saveJsonEntity(inputJsonNode);
+    public ResponseEntity<JsonEntity> saveJsonEntity(@RequestBody String jsonString) {
+        JsonEntity persisted = jsonEntityService.saveJsonEntity(jsonString);
         return ResponseEntity.ok(persisted);
     }
 
@@ -48,16 +48,21 @@ public class UberRestController {
         return ResponseEntity.ok(jsonEntityList);
     }
 
-    // Найти по ключу и по значению (json)
-    @PostMapping(value = "/find2")
-    ResponseEntity<List<JsonEntity>> findByKeyAndValue2(@RequestBody JsonNode inputJsonNode) {
-        List<JsonEntity> jsonEntityList = jsonEntityService.findAllAtTopLevel(inputJsonNode);
+    // Найти по ключу и по значению (json string)
+    @GetMapping(value = "/find2")
+    ResponseEntity<List<JsonEntity>> findByKeyAndValue2(@PathParam("find") String jsonString) {
+        List<JsonEntity> jsonEntityList = jsonEntityService.findAllAtTopLevel(jsonString);
         return ResponseEntity.ok(jsonEntityList);
     }
 
-    /**
-     * Находит и возвращает все JSON`ы, которые содержат строку {@code str} в качестве ключа верхнего уровня
-     */
+    // Найти подобьект JSON по заданному пути в объекте с заданным ID
+    @GetMapping(value = "/getByPath")
+    ResponseEntity<String> findByPath(@PathParam("id") Long id, @PathParam("jp") String jp) {
+        JsonEntity jsonEntity = jsonEntityService.findByPath(id, jp);
+        return ResponseEntity.ok(jsonEntity.getJsonString());
+    }
+
+    // Находит и возвращает все JSON`ы, которые содержат строку {@code str} в качестве ключа верхнего уровня
     @GetMapping(value = "/findAllWhereKeyAtTop")
     ResponseEntity<List<JsonEntity>> findAllWhereKeyAtTop(@PathParam("key") String key) {
         List<JsonEntity> jsonEntityList = jsonEntityService.findAllWhereKeyAtTop(key);
